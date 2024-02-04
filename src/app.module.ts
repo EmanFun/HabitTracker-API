@@ -7,11 +7,15 @@ import { HabitsService } from './habits/habits.service';
 import { UsersService } from './users/users.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as dotenv from 'dotenv';
+import { User, UserSchema } from './users/schemas/user.Schema';
 dotenv.config();
 
 const { MONGO_URI } = process.env;
 @Module({
-  imports: [MongooseModule.forRoot(MONGO_URI)],
+  imports: [
+    MongooseModule.forRoot(MONGO_URI),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+  ],
   controllers: [AppController, UsersController, HabitsController],
   providers: [AppService, HabitsService, UsersService],
 })
